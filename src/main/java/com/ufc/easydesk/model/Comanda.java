@@ -2,9 +2,18 @@ package com.ufc.easydesk.model;
 
 import com.ufc.easydesk.model.enums.Status;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Comanda {
 
