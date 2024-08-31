@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -13,7 +14,12 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private String SECRET_KEY = "your_secret_key"; // Substitua por uma chave secreta segura
+    private final String SECRET_KEY;
+
+    // A chave secreta será injetada a partir das propriedades do ambiente ou do arquivo de configuração
+    public JwtUtil(@Value("${jwt.secret}") String secretKey) {
+        this.SECRET_KEY = secretKey;
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, "sub");
@@ -50,7 +56,7 @@ public class JwtUtil {
         return JWT.create()
                 .withSubject(username)
                 .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas de validade
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
