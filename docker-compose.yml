@@ -3,7 +3,7 @@ version: '3.7'
 services:
   postgres:
     image: postgres:latest
-    container_name: easy_desk_db
+    container_name: postgres_database2
     environment:
       POSTGRES_DB: easydesk_db
       POSTGRES_USER: postgres
