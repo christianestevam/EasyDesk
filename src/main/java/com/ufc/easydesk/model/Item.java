@@ -3,7 +3,6 @@ package com.ufc.easydesk.model;
 import com.ufc.easydesk.model.enums.Categoria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +29,6 @@ public class Item {
     private Categoria categoria;
 
     @Column(nullable = false)
-    private boolean disponibilidade;
+    private Boolean disponibilidade;
 
 }

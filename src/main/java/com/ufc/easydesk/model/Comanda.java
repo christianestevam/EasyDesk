@@ -32,12 +32,12 @@ public class Comanda {
     private String observacao;
 
     @Column(nullable = false)
-    private double total;
+    private Double total;
 
-    private double taxaServico;
+    private Double taxaServico;
 
     @Column(nullable = false)
-    private boolean ativa;
+    private Boolean ativa;
 
     @Enumerated(EnumType.STRING)
     private Status status;
