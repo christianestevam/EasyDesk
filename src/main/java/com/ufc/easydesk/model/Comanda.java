@@ -21,11 +21,11 @@ public class Comanda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Item> itens;
 
     @Column(nullable = false)
-    private int numeroMesa;
+    private Integer numeroMesa;
 
     private String nomeConsumidor;
 

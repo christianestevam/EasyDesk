@@ -22,7 +22,7 @@ public class Item {
     private String descricao;
 
     @Column(nullable = false)
-    private double preco;
+    private Double preco;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
