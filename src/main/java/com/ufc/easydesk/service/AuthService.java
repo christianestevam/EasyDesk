@@ -5,8 +5,12 @@ import com.ufc.easydesk.api.http.request.AuthenticationRequest;
 import com.ufc.easydesk.api.http.response.AuthenticationResponse;
 import com.ufc.easydesk.api.http.request.RegisterRequest;
 import com.ufc.easydesk.model.Cliente;
+import com.ufc.easydesk.model.Role;
+import com.ufc.easydesk.model.enums.RoleName;
 import com.ufc.easydesk.repository.ClienteRepository;
 import com.ufc.easydesk.config.jwt.JwtUtil;
+import com.ufc.easydesk.repository.RoleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,20 +19,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
+@RequiredArgsConstructor
 @Service
 public class AuthService {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private MyUserDetailsService userDetailsService;
+    private final MyUserDetailsService userDetailsService;
+
+    private final RoleRepository roleRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -39,16 +44,22 @@ public class AuthService {
      * @param registerRequest Objeto com as informações de registro.
      * @return O cliente registrado.
      */
-    public Cliente register(RegisterRequest registerRequest) {
+    public void register(RegisterRequest registerRequest) {
         Cliente cliente = new Cliente();
         cliente.setNome(registerRequest.getNome());
         cliente.setCnpjCpf(registerRequest.getCnpjCpf());
         cliente.setTelefone(registerRequest.getTelefone());
         cliente.setEmail(registerRequest.getEmail());
-        cliente.setSenha(passwordEncoder.encode(registerRequest.getSenha())); // Senha criptografada
+        cliente.setSenha(passwordEncoder.encode(registerRequest.getSenha()));
 
-        return clienteRepository.save(cliente);
+        Role role = roleRepository.findByNome(RoleName.ROLE_ADMIN)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        cliente.setRoles(Collections.singleton(role));
+
+        clienteRepository.save(cliente);
     }
+
 
     /**
      * Autentica um usuário e gera um token JWT.
@@ -67,8 +78,9 @@ public class AuthService {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails.getUsername(), userDetails.getAuthorities());
 
         return new AuthenticationResponse(jwt);
     }
+
 }
