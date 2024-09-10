@@ -1,7 +1,9 @@
 package com.ufc.easydesk.api.controller;
 
 import com.ufc.easydesk.api.http.request.CardapioRequestDTO;
+import com.ufc.easydesk.api.http.request.ItemRequestDTO;
 import com.ufc.easydesk.api.http.response.CardapioResponseDTO;
+import com.ufc.easydesk.api.http.response.ItemResponseDTO;
 import com.ufc.easydesk.model.enums.Categoria;
 import com.ufc.easydesk.service.CardapioService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cardapios")
@@ -36,4 +40,38 @@ public class CardapioController {
         CardapioResponseDTO cardapioCompleto = cardapioService.getCardapioCompleto(restauranteId);
         return new ResponseEntity<>(cardapioCompleto, HttpStatus.OK);
     }
+
+    @PostMapping("/{cardapioId}/itens")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE')")
+    public ResponseEntity<CardapioResponseDTO> addItemsToCardapio(
+            @PathVariable Long cardapioId,
+            @RequestBody List<ItemRequestDTO> itens) {
+        CardapioResponseDTO updatedCardapio = cardapioService.addItemsToCardapio(cardapioId, itens);
+        return new ResponseEntity<>(updatedCardapio, HttpStatus.OK);
+    }
+
+    @PutMapping("/{cardapioId}/itens/{itemId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE')")
+    public ResponseEntity<ItemResponseDTO> updateItem(
+            @PathVariable Long cardapioId,
+            @PathVariable Long itemId,
+            @RequestBody ItemRequestDTO itemRequest) {
+        ItemResponseDTO updatedItem = cardapioService.updateItem(cardapioId, itemId, itemRequest);
+        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{cardapioId}/itens/{itemId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE')")
+    public ResponseEntity<Void> deleteItem(
+            @PathVariable Long cardapioId,
+            @PathVariable Long itemId) {
+        cardapioService.deleteItem(cardapioId, itemId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+
+
+
 }

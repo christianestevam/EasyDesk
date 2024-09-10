@@ -1,6 +1,7 @@
 package com.ufc.easydesk.service;
 
 import com.ufc.easydesk.api.http.request.CardapioRequestDTO;
+import com.ufc.easydesk.api.http.request.ItemRequestDTO;
 import com.ufc.easydesk.api.http.response.CardapioResponseDTO;
 import com.ufc.easydesk.api.http.response.ItemResponseDTO;
 import com.ufc.easydesk.model.Cardapio;
@@ -100,4 +101,59 @@ public class CardapioService {
     }
 
     // Conversão do cardápio para DTO
+
+    public CardapioResponseDTO addItemsToCardapio(Long cardapioId, List<ItemRequestDTO> itensRequest) {
+        Cardapio cardapio = cardapioRepository.findById(cardapioId)
+                .orElseThrow(() -> new RuntimeException("Cardápio não encontrado"));
+
+        List<Item> novosItens = itensRequest.stream()
+                .map(itemRequest -> new Item(
+                        null, itemRequest.getNome(),
+                        itemRequest.getDescricao(),
+                        itemRequest.getPreco(),
+                        itemRequest.getCategoria(),
+                        itemRequest.getDisponibilidade()))
+                .collect(Collectors.toList());
+
+        cardapio.getItens().addAll(novosItens);
+        Cardapio updatedCardapio = cardapioRepository.save(cardapio);
+
+        return convertToDto(updatedCardapio);
+    }
+
+    public ItemResponseDTO updateItem(Long cardapioId, Long itemId, ItemRequestDTO itemRequest) {
+        Cardapio cardapio = cardapioRepository.findById(cardapioId)
+                .orElseThrow(() -> new RuntimeException("Cardápio não encontrado"));
+
+        Item item = cardapio.getItens().stream()
+                .filter(i -> i.getId().equals(itemId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Item não encontrado no cardápio"));
+
+        item.setNome(itemRequest.getNome());
+        item.setDescricao(itemRequest.getDescricao());
+        item.setPreco(itemRequest.getPreco());
+        item.setCategoria(itemRequest.getCategoria());
+        item.setDisponibilidade(itemRequest.getDisponibilidade());
+
+        cardapioRepository.save(cardapio);
+
+        return new ItemResponseDTO(item.getId(), item.getNome(), item.getDescricao(), item.getPreco(), item.getCategoria().name(), item.getDisponibilidade());
+    }
+
+    public void deleteItem(Long cardapioId, Long itemId) {
+        Cardapio cardapio = cardapioRepository.findById(cardapioId)
+                .orElseThrow(() -> new RuntimeException("Cardápio não encontrado"));
+
+        Item itemToRemove = cardapio.getItens().stream()
+                .filter(item -> item.getId().equals(itemId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Item não encontrado no cardápio"));
+
+        cardapio.getItens().remove(itemToRemove);
+        cardapioRepository.save(cardapio);
+    }
+
+
+
 }
