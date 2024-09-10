@@ -2,7 +2,7 @@ package com.ufc.easydesk.api.controller;
 
 import com.ufc.easydesk.api.http.request.MesaRequest;
 import com.ufc.easydesk.api.http.response.MesaResponseDTO;
-import com.ufc.easydesk.model.Mesa;
+import com.ufc.easydesk.domain.model.Mesa;
 import com.ufc.easydesk.service.MesaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

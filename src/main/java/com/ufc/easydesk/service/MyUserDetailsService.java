@@ -1,7 +1,7 @@
 package com.ufc.easydesk.service;  // Ajuste o pacote conforme sua estrutura
 
-import com.ufc.easydesk.model.Usuario;
-import com.ufc.easydesk.repository.UsuarioRepository;
+import com.ufc.easydesk.domain.model.Usuario;
+import com.ufc.easydesk.domain.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

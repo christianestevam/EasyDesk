@@ -1,6 +1,6 @@
-package com.ufc.easydesk.repository;
+package com.ufc.easydesk.domain.repository;
 
-import com.ufc.easydesk.model.Funcionario;
+import com.ufc.easydesk.domain.model.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {

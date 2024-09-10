@@ -1,6 +1,6 @@
 package com.ufc.easydesk.api.http.request;
 
-import com.ufc.easydesk.model.enums.Categoria;
+import com.ufc.easydesk.domain.enums.Categoria;
 import lombok.Data;
 
 @Data

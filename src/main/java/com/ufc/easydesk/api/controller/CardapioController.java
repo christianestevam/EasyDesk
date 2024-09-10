@@ -4,7 +4,7 @@ import com.ufc.easydesk.api.http.request.CardapioRequestDTO;
 import com.ufc.easydesk.api.http.request.ItemRequestDTO;
 import com.ufc.easydesk.api.http.response.CardapioResponseDTO;
 import com.ufc.easydesk.api.http.response.ItemResponseDTO;
-import com.ufc.easydesk.model.enums.Categoria;
+import com.ufc.easydesk.domain.enums.Categoria;
 import com.ufc.easydesk.service.CardapioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -68,6 +68,18 @@ public class CardapioController {
         cardapioService.deleteItem(cardapioId, itemId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("/{cardapioId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE')")
+    public ResponseEntity<CardapioResponseDTO> updateCardapio(
+            @PathVariable Long cardapioId,
+            @RequestBody CardapioRequestDTO request) {
+        CardapioResponseDTO updatedCardapio = cardapioService.updateCardapio(cardapioId, request);
+        return new ResponseEntity<>(updatedCardapio, HttpStatus.OK);
+    }
+
+
+
 
 
 

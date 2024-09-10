@@ -1,6 +1,6 @@
-package com.ufc.easydesk.repository;
+package com.ufc.easydesk.domain.repository;
 
-import com.ufc.easydesk.model.Cliente;
+import com.ufc.easydesk.domain.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

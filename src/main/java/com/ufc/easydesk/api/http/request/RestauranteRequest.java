@@ -1,6 +1,6 @@
 package com.ufc.easydesk.api.http.request;
 
-import com.ufc.easydesk.model.Endereco;
+import com.ufc.easydesk.domain.model.Endereco;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

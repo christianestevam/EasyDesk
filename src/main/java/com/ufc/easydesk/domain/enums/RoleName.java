@@ -1,4 +1,4 @@
-package com.ufc.easydesk.model.enums;
+package com.ufc.easydesk.domain.enums;
 
 public enum RoleName {
     ROLE_ADMIN,
