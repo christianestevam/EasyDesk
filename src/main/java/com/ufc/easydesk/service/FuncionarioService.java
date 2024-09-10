@@ -1,13 +1,13 @@
 package com.ufc.easydesk.service;
 
 import com.ufc.easydesk.api.http.request.FuncionarioRequest;
-import com.ufc.easydesk.model.Funcionario;
-import com.ufc.easydesk.model.Restaurante;
-import com.ufc.easydesk.model.Role;
-import com.ufc.easydesk.model.enums.RoleName;
-import com.ufc.easydesk.repository.FuncionarioRepository;
-import com.ufc.easydesk.repository.RestauranteRepository;
-import com.ufc.easydesk.repository.RoleRepository;
+import com.ufc.easydesk.domain.model.Funcionario;
+import com.ufc.easydesk.domain.model.Restaurante;
+import com.ufc.easydesk.domain.model.Role;
+import com.ufc.easydesk.domain.enums.RoleName;
+import com.ufc.easydesk.domain.repository.FuncionarioRepository;
+import com.ufc.easydesk.domain.repository.RestauranteRepository;
+import com.ufc.easydesk.domain.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

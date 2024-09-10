@@ -1,6 +1,6 @@
 package com.ufc.easydesk.api.http.response;
 
-import com.ufc.easydesk.model.Endereco;
+import com.ufc.easydesk.domain.model.Endereco;
 import lombok.Data;
 
 @Data

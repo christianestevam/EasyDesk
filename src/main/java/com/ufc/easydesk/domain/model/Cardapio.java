@@ -1,4 +1,4 @@
-package com.ufc.easydesk.model;
+package com.ufc.easydesk.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

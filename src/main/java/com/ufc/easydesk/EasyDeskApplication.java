@@ -1,8 +1,8 @@
 package com.ufc.easydesk;
 
-import com.ufc.easydesk.model.Role;
-import com.ufc.easydesk.model.enums.RoleName;
-import com.ufc.easydesk.repository.RoleRepository;
+import com.ufc.easydesk.domain.model.Role;
+import com.ufc.easydesk.domain.enums.RoleName;
+import com.ufc.easydesk.domain.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

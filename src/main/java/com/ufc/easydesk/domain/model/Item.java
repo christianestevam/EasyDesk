@@ -1,6 +1,6 @@
-package com.ufc.easydesk.model;
+package com.ufc.easydesk.domain.model;
 
-import com.ufc.easydesk.model.enums.Categoria;
+import com.ufc.easydesk.domain.enums.Categoria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

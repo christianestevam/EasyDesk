@@ -1,6 +1,6 @@
-package com.ufc.easydesk.repository;
+package com.ufc.easydesk.domain.repository;
 
-import com.ufc.easydesk.model.Item;
+import com.ufc.easydesk.domain.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {

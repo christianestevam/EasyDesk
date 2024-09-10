@@ -1,6 +1,6 @@
-package com.ufc.easydesk.model;
+package com.ufc.easydesk.domain.model;
 
-import com.ufc.easydesk.model.enums.RoleName;
+import com.ufc.easydesk.domain.enums.RoleName;
 import jakarta.persistence.*;
 import lombok.*;
 

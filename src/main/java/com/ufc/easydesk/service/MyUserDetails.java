@@ -1,6 +1,6 @@
 package com.ufc.easydesk.service;
 
-import com.ufc.easydesk.model.Usuario;
+import com.ufc.easydesk.domain.model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

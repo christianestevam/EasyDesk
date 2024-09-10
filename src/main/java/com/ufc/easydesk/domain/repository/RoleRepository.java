@@ -1,7 +1,7 @@
-package com.ufc.easydesk.repository;
+package com.ufc.easydesk.domain.repository;
 
-import com.ufc.easydesk.model.Role;
-import com.ufc.easydesk.model.enums.RoleName; // Supondo que a enum RoleName esteja no pacote enums
+import com.ufc.easydesk.domain.model.Role;
+import com.ufc.easydesk.domain.enums.RoleName; // Supondo que a enum RoleName esteja no pacote enums
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

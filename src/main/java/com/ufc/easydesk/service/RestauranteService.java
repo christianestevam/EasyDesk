@@ -2,10 +2,10 @@ package com.ufc.easydesk.service;
 
 import com.ufc.easydesk.api.http.request.RestauranteRequest;
 import com.ufc.easydesk.api.http.response.RestauranteResponse;
-import com.ufc.easydesk.model.Cliente;
-import com.ufc.easydesk.model.Restaurante;
-import com.ufc.easydesk.repository.ClienteRepository;
-import com.ufc.easydesk.repository.RestauranteRepository;
+import com.ufc.easydesk.domain.model.Cliente;
+import com.ufc.easydesk.domain.model.Restaurante;
+import com.ufc.easydesk.domain.repository.ClienteRepository;
+import com.ufc.easydesk.domain.repository.RestauranteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

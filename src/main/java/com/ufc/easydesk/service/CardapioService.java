@@ -4,12 +4,12 @@ import com.ufc.easydesk.api.http.request.CardapioRequestDTO;
 import com.ufc.easydesk.api.http.request.ItemRequestDTO;
 import com.ufc.easydesk.api.http.response.CardapioResponseDTO;
 import com.ufc.easydesk.api.http.response.ItemResponseDTO;
-import com.ufc.easydesk.model.Cardapio;
-import com.ufc.easydesk.model.Item;
-import com.ufc.easydesk.model.Restaurante;
-import com.ufc.easydesk.model.enums.Categoria;
-import com.ufc.easydesk.repository.CardapioRepository;
-import com.ufc.easydesk.repository.RestauranteRepository;
+import com.ufc.easydesk.domain.model.Cardapio;
+import com.ufc.easydesk.domain.model.Item;
+import com.ufc.easydesk.domain.model.Restaurante;
+import com.ufc.easydesk.domain.enums.Categoria;
+import com.ufc.easydesk.domain.repository.CardapioRepository;
+import com.ufc.easydesk.domain.repository.RestauranteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -153,6 +153,43 @@ public class CardapioService {
         cardapio.getItens().remove(itemToRemove);
         cardapioRepository.save(cardapio);
     }
+
+    public CardapioResponseDTO updateCardapio(Long cardapioId, CardapioRequestDTO request) {
+        Cardapio cardapio = cardapioRepository.findById(cardapioId)
+                .orElseThrow(() -> new RuntimeException("Cardápio não encontrado"));
+
+        Restaurante restaurante = restauranteRepository.findById(request.getRestauranteId())
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+
+        // Verifica se o usuário tem permissão para editar o cardápio desse restaurante
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!restaurante.getProprietario().getEmail().equals(email)) {
+            throw new RuntimeException("Você não tem permissão para editar o cardápio deste restaurante.");
+        }
+
+        // Atualizar o restaurante associado ao cardápio
+        cardapio.setRestaurante(restaurante);
+
+        // Atualizar os itens do cardápio
+        List<Item> updatedItens = request.getItens().stream()
+                .map(itemRequest -> new Item(
+                        null, itemRequest.getNome(),
+                        itemRequest.getDescricao(),
+                        itemRequest.getPreco(),
+                        itemRequest.getCategoria(),
+                        itemRequest.getDisponibilidade()))
+                .collect(Collectors.toList());
+
+        cardapio.setItens(updatedItens);
+
+        // Salvar alterações
+        Cardapio updatedCardapio = cardapioRepository.save(cardapio);
+
+        // Retornar o cardápio atualizado
+        return convertToDto(updatedCardapio);
+    }
+
+
 
 
 
