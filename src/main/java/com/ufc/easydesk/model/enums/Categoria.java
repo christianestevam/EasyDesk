@@ -4,5 +4,6 @@ public enum Categoria {
     VEGETARIANO,
     BEBIDA,
     HAMBURGUER,
-    PIZZA
+    PIZZA,
+    PRATOS_EXECUTIVOS,
 }
