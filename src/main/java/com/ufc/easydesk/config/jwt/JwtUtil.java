@@ -35,9 +35,9 @@ public class JwtUtil {
                 .withSubject(username)
                 .withClaim("roles", authorities.stream()
                         .map(GrantedAuthority::getAuthority)
-                        .collect(Collectors.toList())) // Deixe as roles como estão, sem adicionar "ROLE_"
+                        .collect(Collectors.toList()))
                 .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Token válido por 10 horas
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
