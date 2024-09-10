@@ -1,4 +1,4 @@
-package com.ufc.easydesk.config;
+package com.ufc.easydesk.config.security;
 
 import com.ufc.easydesk.config.jwt.JwtRequestFilter;
 import com.ufc.easydesk.service.MyUserDetailsService;
