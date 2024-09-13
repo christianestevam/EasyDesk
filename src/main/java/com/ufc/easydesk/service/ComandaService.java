@@ -111,4 +111,11 @@ public class ComandaService {
         return convertToDto(comanda);
     }
 
+    public List<ComandaResponseDTO> getComandasAtivas() {
+        List<Comanda> comandasAtivas = comandaRepository.findByAtivaTrue();
+        return comandasAtivas.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
 }
