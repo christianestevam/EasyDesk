@@ -10,9 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class ClienteService {
@@ -35,10 +32,9 @@ public class ClienteService {
         dto.setCnpjCpf(cliente.getCnpjCpf());
         dto.setTelefone(cliente.getTelefone());
 
-        List<RestauranteResponseDTO> restaurantesDTO = cliente.getRestaurantes().stream()
-                .map(this::convertRestauranteToDTO)
-                .collect(Collectors.toList());
-        dto.setRestaurantes(restaurantesDTO);
+        Restaurante restaurante = cliente.getRestaurante();
+        RestauranteResponseDTO restauranteDTO = convertRestauranteToDTO(restaurante);
+        dto.setRestaurante(restauranteDTO);
 
         return dto;
     }

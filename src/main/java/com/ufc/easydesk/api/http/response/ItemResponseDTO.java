@@ -14,7 +14,4 @@ public class ItemResponseDTO {
     private String categoria;
     private Boolean disponibilidade;
 
-    public ItemResponseDTO() {
-
-    }
 }

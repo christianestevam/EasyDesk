@@ -36,9 +36,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/api/authenticate", "/api/cardapios/**").permitAll()                        .requestMatchers("/api/funcionarios/**").hasAnyRole("ADMIN", "GERENTE")
-                        .requestMatchers("/api/restaurantes/**").hasAnyRole("ADMIN", "GERENTE")
-                        .requestMatchers("/api/mesas/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers("/api/auth/register", "/api/auth/authenticate", "/api/cardapio/**").permitAll()                        .requestMatchers("/api/funcionarios/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers("/api/restaurante").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers("/api/mesa/**").hasAnyRole("ADMIN", "GERENTE")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

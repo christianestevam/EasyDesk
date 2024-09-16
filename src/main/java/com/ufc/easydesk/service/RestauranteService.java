@@ -37,8 +37,6 @@ public class RestauranteService {
         response.setCnpj(savedRestaurante.getCnpj());
         response.setTelefone(savedRestaurante.getTelefone());
         response.setEndereco(savedRestaurante.getEndereco());
-        response.setProprietarioEmail(proprietario.getEmail());
-
         return response;
     }
 }

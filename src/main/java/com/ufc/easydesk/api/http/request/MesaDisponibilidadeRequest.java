@@ -3,7 +3,6 @@ package com.ufc.easydesk.api.http.request;
 import lombok.Data;
 
 @Data
-public class MesaRequest {
-    private Long numeroMesa;
+public class MesaDisponibilidadeRequest {
     private Boolean disponibilidade;
 }

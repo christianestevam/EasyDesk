@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/restaurantes")
+@RequestMapping("/api/restaurante")
 @RequiredArgsConstructor
 public class RestauranteController {
 
     private final RestauranteService restauranteService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE')")
     public ResponseEntity<RestauranteResponse> createRestaurant(@Valid @RequestBody RestauranteRequest request) {
         RestauranteResponse response = restauranteService.createRestaurante(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);

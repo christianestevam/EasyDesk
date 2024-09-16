@@ -11,5 +11,5 @@ public class ClienteResponseDTO {
     private String nome;
     private String cnpjCpf;
     private String telefone;
-    private List<RestauranteResponseDTO> restaurantes; // Usando o DTO simplificado
+    private RestauranteResponseDTO restaurante;
 }

@@ -16,6 +16,5 @@ public class RestauranteRequest {
     @NotBlank(message = "O telefone é obrigatório.")
     private String telefone;
 
-
     private Endereco endereco;
 }

@@ -1,5 +1,6 @@
 package com.ufc.easydesk.api.controller;
 
+import com.ufc.easydesk.api.http.request.MesaDisponibilidadeRequest;
 import com.ufc.easydesk.api.http.request.MesaRequest;
 import com.ufc.easydesk.api.http.response.MesaResponseDTO;
 import com.ufc.easydesk.domain.model.Mesa;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/mesas")
+@RequestMapping("/api/mesa")
 @RequiredArgsConstructor
 public class MesaController {
 
@@ -25,13 +26,29 @@ public class MesaController {
         Mesa mesa = new Mesa();
         mesa.setNumeroMesa(request.getNumeroMesa());
         mesa.setDisponibilidade(request.getDisponibilidade());
-        MesaResponseDTO createdMesa = mesaService.createMesa(mesa, request.getRestauranteId());
+        MesaResponseDTO createdMesa = mesaService.createMesa(mesa);  // Removido restauranteId
         return new ResponseEntity<>(createdMesa, HttpStatus.CREATED);
     }
 
-    @GetMapping("/restaurante/{restauranteId}")
-    public ResponseEntity<List<MesaResponseDTO>> getMesasByRestaurante(@PathVariable Long restauranteId) {
-        List<MesaResponseDTO> mesas = mesaService.getMesasByRestaurante(restauranteId);
+    @GetMapping
+    public ResponseEntity<List<MesaResponseDTO>> getMesas() {
+        List<MesaResponseDTO> mesas = mesaService.getMesasByRestaurante();  // Removido restauranteId
         return new ResponseEntity<>(mesas, HttpStatus.OK);
+    }
+
+    @PutMapping("/{mesaId}/disponibilidade")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE')")
+    public ResponseEntity<MesaResponseDTO> alterarDisponibilidadeMesa(
+            @PathVariable Long mesaId,
+            @RequestBody MesaDisponibilidadeRequest disponibilidadeRequest) {
+        MesaResponseDTO updatedMesa = mesaService.alterarDisponibilidadeMesa(mesaId, disponibilidadeRequest.getDisponibilidade());
+        return new ResponseEntity<>(updatedMesa, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{mesaId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE')")
+    public ResponseEntity<Void> deleteMesa(@PathVariable Long mesaId) {
+        mesaService.deleteMesa(mesaId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

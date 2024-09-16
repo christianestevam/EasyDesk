@@ -19,16 +19,11 @@ public class MesaService {
     private final MesaRepository mesaRepository;
     private final RestauranteRepository restauranteRepository;
 
-    // Criar mesa associada a um restaurante
-    public MesaResponseDTO createMesa(Mesa mesa, Long restauranteId) {
+    // Criar mesa associada ao restaurante do cliente logado
+    public MesaResponseDTO createMesa(Mesa mesa) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Restaurante restaurante = restauranteRepository.findById(restauranteId)
-                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
-
-        // Verifica se o restaurante pertence ao cliente autenticado
-        if (!restaurante.getProprietario().getEmail().equals(email)) {
-            throw new RuntimeException("Você não tem permissão para acessar este restaurante.");
-        }
+        Restaurante restaurante = restauranteRepository.findByProprietarioEmail(email)
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado para o cliente logado"));
 
         mesa.setRestaurante(restaurante);
         Mesa savedMesa = mesaRepository.save(mesa);
@@ -36,18 +31,24 @@ public class MesaService {
         return convertToDto(savedMesa);
     }
 
-    // Buscar todas as mesas de um restaurante específico
-    public List<MesaResponseDTO> getMesasByRestaurante(Long restauranteId) {
+    // Alterar a disponibilidade da mesa
+    public MesaResponseDTO alterarDisponibilidadeMesa(Long mesaId, Boolean disponibilidade) {
+        Mesa mesa = mesaRepository.findById(mesaId)
+                .orElseThrow(() -> new RuntimeException("Mesa não encontrada"));
+
+        mesa.setDisponibilidade(disponibilidade);
+        Mesa updatedMesa = mesaRepository.save(mesa);
+
+        return convertToDto(updatedMesa);
+    }
+
+    // Buscar todas as mesas do restaurante do cliente logado
+    public List<MesaResponseDTO> getMesasByRestaurante() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Restaurante restaurante = restauranteRepository.findById(restauranteId)
-                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        Restaurante restaurante = restauranteRepository.findByProprietarioEmail(email)
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado para o cliente logado"));
 
-        // Verifica se o restaurante pertence ao cliente autenticado
-        if (!restaurante.getProprietario().getEmail().equals(email)) {
-            throw new RuntimeException("Você não tem permissão para acessar este restaurante.");
-        }
-
-        return mesaRepository.findByRestauranteId(restauranteId).stream()
+        return mesaRepository.findByRestauranteId(restaurante.getId()).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -55,8 +56,22 @@ public class MesaService {
     // Método para converter a entidade Mesa para MesaResponseDTO
     private MesaResponseDTO convertToDto(Mesa mesa) {
         MesaResponseDTO dto = new MesaResponseDTO();
+        dto.setId(mesa.getId());  // Retorna o ID da mesa
         dto.setNumeroMesa(mesa.getNumeroMesa());
         dto.setDisponibilidade(mesa.getDisponibilidade());
         return dto;
+    }
+
+    public void deleteMesa(Long mesaId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Mesa mesa = mesaRepository.findById(mesaId)
+                .orElseThrow(() -> new RuntimeException("Mesa não encontrada"));
+
+        // Verifica se o restaurante da mesa pertence ao usuário logado
+        if (!mesa.getRestaurante().getProprietario().getEmail().equals(email)) {
+            throw new RuntimeException("Você não tem permissão para deletar esta mesa.");
+        }
+
+        mesaRepository.delete(mesa);
     }
 }

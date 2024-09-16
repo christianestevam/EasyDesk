@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/funcionarios")
+@RequestMapping("/api/funcionario")
 @RequiredArgsConstructor
 public class FuncionarioController {
 

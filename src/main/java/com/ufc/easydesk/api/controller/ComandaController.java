@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/comandas")
+@RequestMapping("/api/comanda")
 @RequiredArgsConstructor
 public class ComandaController {
 
@@ -45,4 +47,12 @@ public class ComandaController {
         ComandaResponseDTO comanda = comandaService.getComandaById(comandaId);
         return new ResponseEntity<>(comanda, HttpStatus.OK);
     }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GERENTE') or hasRole('GARCOM')")
+    public ResponseEntity<List<ComandaResponseDTO>> getAllComandas() {
+        List<ComandaResponseDTO> comandas = comandaService.getAllComandas();
+        return new ResponseEntity<>(comandas, HttpStatus.OK);
+    }
+
 }
