@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/easydesk_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  secret: fb7S@REuio~j[[j8HC`Pn=gG$HdH.8WCN8iT4QhXx27W]N0Uo
+
+server:
+  port: 8080
+
+java:
+  version: 21
