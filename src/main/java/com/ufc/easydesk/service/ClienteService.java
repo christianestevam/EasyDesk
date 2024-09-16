@@ -33,7 +33,7 @@ public class ClienteService {
         dto.setTelefone(cliente.getTelefone());
 
         Restaurante restaurante = cliente.getRestaurante();
-        RestauranteResponseDTO restauranteDTO = convertRestauranteToDTO(restaurante);
+        RestauranteResponseDTO restauranteDTO = (restaurante != null) ? convertRestauranteToDTO(restaurante) : null;
         dto.setRestaurante(restauranteDTO);
 
         return dto;
