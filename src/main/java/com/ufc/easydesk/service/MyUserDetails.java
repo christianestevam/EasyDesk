@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
 
-    private Usuario usuario;
+    private final Usuario usuario;
 
     public MyUserDetails(Usuario usuario) {
         this.usuario = usuario;

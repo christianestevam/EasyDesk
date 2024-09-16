@@ -11,5 +11,4 @@ public class RestauranteResponse {
     private String cnpj;
     private String telefone;
     private Endereco endereco;
-    private String proprietarioEmail;
 }

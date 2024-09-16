@@ -17,5 +17,4 @@ public class Funcionario extends Usuario {
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)
     private Restaurante restaurante;
-
 }

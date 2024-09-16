@@ -8,5 +8,5 @@ public class RestauranteResponseDTO {
     private String nome;
     private String telefone;
     private EnderecoResponseDTO endereco;
-    private String cnpj; // Sem o proprietário para evitar loop infinito
+    private String cnpj;
 }

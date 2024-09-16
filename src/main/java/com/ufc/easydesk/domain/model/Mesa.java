@@ -16,10 +16,10 @@ public class Mesa {
     private Long id;
 
     @Column(nullable = false)
-    private Long numeroMesa; // Usando Integer em vez de int
+    private Long numeroMesa;
 
     @Column(nullable = false)
-    private Boolean disponibilidade; // Usando Boolean em vez de boolean
+    private Boolean disponibilidade;
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)

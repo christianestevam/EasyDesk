@@ -44,7 +44,7 @@ public class ComandaService {
                 .taxaServico(request.getTaxaServico())
                 .total(total)
                 .ativa(true)
-                .status(Status.ABERTA)  // Status inicial como ABERTA
+                .status(Status.ABERTO)  // Status inicial como ABERTA
                 .dataHoraAbertura(LocalDateTime.now())  // Data e hora de abertura
                 .build();
 
@@ -110,5 +110,13 @@ public class ComandaService {
                 .orElseThrow(() -> new RuntimeException("Comanda não encontrada"));
         return convertToDto(comanda);
     }
+
+    public List<ComandaResponseDTO> getAllComandas() {
+        List<Comanda> comandas = comandaRepository.findAll();
+        return comandas.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
 
 }

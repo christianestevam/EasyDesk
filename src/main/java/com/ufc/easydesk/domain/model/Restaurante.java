@@ -31,7 +31,7 @@ public class Restaurante {
     @Column(nullable = false, unique = true)
     private String cnpj;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "proprietario_id", nullable = false)
     private Cliente proprietario;
 
@@ -43,5 +43,4 @@ public class Restaurante {
 
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
     private List<Cardapio> cardapios;
-
 }
