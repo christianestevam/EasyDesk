@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,15 +27,19 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
-    private final MyUserDetailsService myUserDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/api/auth/authenticate", "/api/cardapio/**").permitAll()                        .requestMatchers("/api/funcionarios/**").hasAnyRole("ADMIN", "GERENTE")
+                        // Permitir acesso para Swagger, OpenAPI e Documentação
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html").permitAll()
+                        // Rotas públicas de autenticação
+                        .requestMatchers("/api/auth/registro", "/api/auth/login").permitAll()
+                        // Regras de acesso para outras rotas
+                        .requestMatchers("/api/funcionarios/**").hasAnyRole("ADMIN", "GERENTE")
                         .requestMatchers("/api/restaurante").hasAnyRole("ADMIN", "GERENTE")
                         .requestMatchers("/api/mesa/**").hasAnyRole("ADMIN", "GERENTE")
                         .anyRequest().authenticated())
