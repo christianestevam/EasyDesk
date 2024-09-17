@@ -17,3 +17,24 @@ server:
 
 java:
   version: 21
+
+# OpenAPI and Swagger Configuration
+# OpenAPI and Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  info:
+    title: "EasyDesk API"
+    description: "API for EasyDesk Application"
+    version: "1.0.0"
+    contact:
+      name: "Christian Estevam"
+      email: "christianestevamb@gmail.com"
+  security-schemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  security-enabled: true
