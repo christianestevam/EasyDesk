@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,7 +23,7 @@ public class Comanda {
     private Long id;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Item> itens;
+    private List<Item> itens = new ArrayList<>();
 
     @Column(nullable = false)
     private Integer numeroMesa;

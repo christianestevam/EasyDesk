@@ -89,7 +89,7 @@ public class CardapioService {
                         item.getNome(),
                         item.getDescricao(),
                         item.getPreco(),
-                        item.getCategoria().name(),
+                        item.getCategoria() != null ? item.getCategoria().name() : "SEM_CATEGORIA",
                         item.getDisponibilidade()))
                 .collect(Collectors.toList()));
         return dto;

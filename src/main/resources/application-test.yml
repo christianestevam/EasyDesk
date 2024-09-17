@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb  # Banco de dados em memória para testes
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Cria e exclui o banco a cada execução dos testes
+    show-sql: true  # Mostra as queries SQL executadas no console
+
+jwt:
+  secret: fb7S@REuio~j[[j8HC`Pn=gG$HdH.8WCN8iT4QhXx27W]N0Uo
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  info:
+    title: "EasyDesk API - Testes"
+    description: "API para testes do EasyDesk Application"
+    version: "1.0.0"
+  security-schemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  security-enabled: true

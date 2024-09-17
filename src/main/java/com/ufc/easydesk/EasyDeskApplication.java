@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.ufc.easydesk.domain.repository")
 public class EasyDeskApplication implements CommandLineRunner {
 
 	@Autowired
